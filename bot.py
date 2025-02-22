@@ -1,3 +1,5 @@
+# bot.py
+
 import random
 import asyncio
 import logging
@@ -6,25 +8,16 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.filters.command import Command
 import psycopg2
 
+# Импорт настроек из config.py
+from config import API_TOKEN, ADMIN_ID, DB_CONFIG
+
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Токен бота
-API_TOKEN = 'YOUR_BOT_TOKEN'
-
 # Инициализация бота и диспетчера
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
-
-# Настройки подключения к PostgreSQL
-DB_CONFIG = {
-    "dbname": "your_database_name",  # Замените на имя вашей базы данных
-    "user": "your_database_user",    # Замените на имя пользователя PostgreSQL
-    "password": "your_database_password",  # Замените на ваш пароль
-    "host": "localhost",             # Хост базы данных
-    "port": "5432"                   # Порт PostgreSQL
-}
 
 # Глобальная переменная для подключения к базе данных
 conn = None
@@ -87,9 +80,7 @@ def initialize_db():
 # Переменная для хранения состояния пользователей
 state = {}
 
-# ID администратора (замените на ваш ID)
-ADMIN_ID = 123456789
-
+# Проверка прав администратора
 def is_admin(user_id):
     return user_id == ADMIN_ID
 
